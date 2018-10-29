@@ -1,0 +1,7 @@
+[package]
+name = "bitcoin-utxo-visualizer-rs"
+version = "0.1.0"
+authors = ["Martin Ankerl <martin.ankerl@gmail.com>"]
+
+[dependencies]
+memmap = "*"
