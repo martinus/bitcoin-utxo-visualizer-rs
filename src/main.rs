@@ -29,7 +29,7 @@ impl CheckSequential {
 
 impl blk::BlockCallback for CheckSequential {
     fn begin_block(&mut self, block_height: u32) {
-        if block_height != self.last_block + 1 {
+        if block_height != self.last_block.wrapping_add(1) {
             println!(
                 "begin_block: expected block {} but got {}",
                 self.last_block + 1,
