@@ -8,9 +8,10 @@
 
 use std::env;
 
-mod blk;
+pub mod blk;
 
-struct CheckSequential {
+/// Checks correct order of blocks in the file.
+pub struct CheckSequential {
     last_block: u32,
     num_changes: u32,
 }

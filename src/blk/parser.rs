@@ -6,7 +6,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+/// This callback is called while parsing the blk data file.
 pub trait BlockCallback {
+    /// Called whenever a new block starts.
+    /// * `block_height`: The block height, starting by 0, of the current block.
     fn begin_block(&mut self, block_height: u32);
     fn change(&mut self, block_height: u32, amount: i64, is_same_as_previous_change: bool);
     fn end_block(&mut self, block_height: u32);
