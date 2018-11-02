@@ -1,8 +1,4 @@
-use self::memmap::Mmap;
 use std::env;
-use std::fs::File;
-
-extern crate memmap;
 
 mod blk;
 
@@ -60,12 +56,10 @@ fn main() -> std::io::Result<()> {
     // process each byte
     let mut callback = CheckSequential::new();
 
-    // mmap file into an u8 array
-    let data = File::open(filename)?;
-    let data = unsafe { Mmap::map(&data)? };
-    let data = data.as_ref();
+    let mut ffs = blk::FastFileSource::new(filename)?;
 
-    match blk::parse(&mut data.iter(), &mut callback) {
+    let mut iter = ffs.iter();
+    match blk::parse(&mut iter, &mut callback) {
         None => {
             println!("Something bad happened");
         }
