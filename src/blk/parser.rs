@@ -1,3 +1,11 @@
+// Copyright 2016 Martin Ankerl.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
 pub trait BlockCallback {
     fn begin_block(&mut self, block_height: u32);
     fn change(&mut self, block_height: u32, amount: i64, is_same_as_previous_change: bool);
