@@ -12,3 +12,5 @@ mod fast_file_source;
 pub use self::parser::parse;
 pub use self::parser::BlockCallback;
 mod parser;
+
+mod change_to_pixel;

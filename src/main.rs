@@ -80,25 +80,3 @@ fn main() -> std::io::Result<()> {
     callback.print();
     Ok(())
 }
-
-#[cfg(test)]
-mod tests {
-    use std::fs::File;
-    use std::io::prelude::*;
-    use std::io::BufReader;
-
-    #[test]
-    fn read_with_bufreader() -> std::io::Result<()> {
-        let f = File::open("data/all.blk")?;
-        let f = BufReader::new(f);
-
-        let mut hash: u32 = 0;
-        for b in f.bytes() {
-            hash = hash.wrapping_add(b.unwrap() as u32);
-        }
-
-        assert_eq!(2127919936, hash);
-
-        Ok(())
-    }
-}
