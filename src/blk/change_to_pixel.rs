@@ -9,7 +9,7 @@
 // Maps a blockheight & amount to a pixel.
 pub struct ChangeToPixel {
     /// Height in pixels
-    height: u32,
+    pixel_height: u32,
 
     // min satoshi will be lowest row, so height-1.
     min_satoshi: i64,
@@ -38,9 +38,9 @@ impl LinearFunction {
 }
 
 impl ChangeToPixel {
-    pub fn new(height: u32, min_satoshi: i64, max_satoshi: i64) -> ChangeToPixel {
+    pub fn new(pixel_height: u32, min_satoshi: i64, max_satoshi: i64) -> ChangeToPixel {
         ChangeToPixel {
-            height: height,
+            pixel_height: pixel_height,
             min_satoshi: min_satoshi,
             max_satoshi: max_satoshi,
         }
@@ -92,4 +92,8 @@ mod tests {
         assert!(nearly_equal(1.4, lf.calc(0.0)));
     }
 
+    #[test]
+    fn change_to_pixel() {
+        let _ctp = ChangeToPixel::new(1024, 1, 10_000 * 100_000_000);
+    }
 }
