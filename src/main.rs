@@ -44,7 +44,7 @@ impl blk::BlockCallback for CheckSequential {
         self.last_block = block_height;
     }
 
-    fn change(&mut self, _block_height: u32, _amount: i64, _is_same_as_previous_change: bool) {
+    fn change(&mut self, _block_height: u32, _amount: i64) {
         self.num_changes += 1;
     }
     fn end_block(&mut self, block_height: u32) {

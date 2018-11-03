@@ -11,7 +11,14 @@ pub trait BlockCallback {
     /// Called whenever a new block starts.
     /// * `block_height`: The block height, starting by 0, of the current block.
     fn begin_block(&mut self, block_height: u32);
-    fn change(&mut self, block_height: u32, amount: i64, is_same_as_previous_change: bool);
+
+    /// Called for each UTXO that is created/destroyed within the block started with `begin_block`.
+    /// * `block_height`: Block height of the UTXO that is created/destroyed.
+    /// * `amount_satoshi`: changed amount, in satoshi. Positive if UTXO is created, negative if UTXO is destroyed.
+    fn change(&mut self, block_height: u32, amount_satoshi: i64);
+
+    /// Called whenever a block has finished processing.
+    /// * `block_height`: Block height of the ending block. Same as when previously `begin_block` was called.
     fn end_block(&mut self, block_height: u32);
 }
 
@@ -84,7 +91,7 @@ pub fn parse(it: &mut std::slice::Iter<u8>, callback: &mut BlockCallback) -> Opt
 
         let mut amount = parse_i64(it)?;
         let mut amount_block_height = parse_u32(it)?;
-        callback.change(amount_block_height, amount, false);
+        callback.change(amount_block_height, amount);
 
         let mut bytes_read = 4 + 8;
         while bytes_read < num_bytes_total {
@@ -95,11 +102,7 @@ pub fn parse(it: &mut std::slice::Iter<u8>, callback: &mut BlockCallback) -> Opt
             let (bytes, block_diff) = parse_var_i32(it)?;
             bytes_read += bytes;
             amount_block_height = amount_block_height.wrapping_add(block_diff as u32);
-            callback.change(
-                amount_block_height,
-                amount,
-                amount_diff == 0 && block_diff == 0,
-            );
+            callback.change(amount_block_height, amount);
         }
     }
 }

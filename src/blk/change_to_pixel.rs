@@ -23,6 +23,7 @@ pub struct LinearFunction {
     d: f64,
 }
 
+/// Implements a linear function interpolation.
 impl LinearFunction {
     pub fn new(x1: f64, y1: f64, x2: f64, y2: f64) -> LinearFunction {
         let k = (y2 - y1) / (x2 - x1);
